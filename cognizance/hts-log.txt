@@ -1,0 +1,13 @@
+HTTrack3.49-2+htsswf+htsjava launched on Wed, 11 Feb 2026 19:34:59 at https://templates.hibootstrap.com/cognizance/default/index.html +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://templates.hibootstrap.com/cognizance/default/index.html -O1 "C:\My Web Sites\cognizance" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+19:37:25	Error: 	"Not Found" (404) at link https://templates.hibootstrap.com/cognizance/default/assets/css/owl.video.play.png (from https://templates.hibootstrap.com/cognizance/default/assets/css/owl.carousel.min.css)
+19:37:25	Error: 	"Not Found" (404) at link https://templates.hibootstrap.com/cognizance/default/login.html (from https://templates.hibootstrap.com/cognizance/default/checkout.html)
+
+HTTrack Website Copier/3.49-2 mirror complete in 2 minutes 26 seconds : 207 links scanned, 204 files written (12292912 bytes overall) [9763899 bytes received at 66876 bytes/sec], 3788310 bytes transferred using HTTP compression in 65 files, ratio 29%, 51.7 requests per connection
+(2 errors, 0 warnings, 0 messages)
