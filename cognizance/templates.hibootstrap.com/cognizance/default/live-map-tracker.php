@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
-    <head>
+    
+<head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,8 +26,7 @@
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
     </head>
     <body>
-
-        <!-- Preloader -->
+  <!-- Preloader -->
         <div class="preloader">
             <div class="loader">
                 <div class="shadow"></div>
@@ -35,40 +35,47 @@
         </div>
         <!-- End Preloader -->
 
-        <!-- Start Coming Soon Area -->
-        <div class="coming-soon-area">
-            <div class="d-table">
-                <div class="d-table-cell">
-                    <div class="coming-soon-content">
-                        <a href="index.php" class="logo">
-                            <img src="assets/img/logo.png" alt="image">
-                        </a>
+        <!-- Start Header Area -->
+        <header class="header-area">
 
-                        <h2>We Are Launching Soon</h2>
-
-                        <div id="timer" class="flex-wrap d-flex justify-content-center">
-                            <div id="days" class="align-items-center flex-column d-flex justify-content-center"></div>
-                            <div id="hours" class="align-items-center flex-column d-flex justify-content-center"></div>
-                            <div id="minutes" class="align-items-center flex-column d-flex justify-content-center"></div>
-                            <div id="seconds" class="align-items-center flex-column d-flex justify-content-center"></div>
+            <!-- Top Header -->
+            <div class="top-header">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-12">
+                            <ul class="top-header-social">
+                                <li><a href="https://www.facebook.com/login/" target="_blank"><i class='bx bxl-facebook'></i></a></li>
+                                <li><li><a href="https://twitter.com/i/flow/login" target="_blank"><i class='bx bxl-twitter'></i></a></li></li>
+                                <li><li><a href="https://www.instagram.com/accounts/login/" target="_blank"><i class='bx bxl-instagram'></i></a></li></li>
+                                <li><a href="https://www.pinterest.com/" target="_blank"><i class='bx bxl-pinterest-alt'></i></a></li>
+                                <li><a href="https://www.linkedin.com/" target="_blank"><i class='bx bxl-linkedin'></i></a></li>
+                            </ul>
                         </div>
 
-                        <form class="newsletter-form" data-bs-toggle="validator">
-                            <div class="form-group">
-                                <input type="email" class="input-newsletter" placeholder="Enter your email" name="EMAIL" required autocomplete="off">
-                                <span class="label-title"><i class='bx bx-envelope'></i></span>
-                            </div>
-                            
-                            <button type="submit" class="default-btn"><i class="flaticon-plane"></i> Subscribe</button>
-                            <div id="validator-newsletter" class="form-result"></div>
-
-                            <p>If you would like to be notified when your app is live, Please subscribe to our mailing list.</p>
-                        </form>
+                        <div class="col-lg-8 col-md-12">
+                            <ul class="top-header-contact-info">
+                                <li><i class='bx bx-map'></i> 2750 Quadra Street Victoria, Canada.</li>
+                                <li><i class='bx bx-phone-call'></i> Emergancy Helpline: <a href="tel:+44587154756">+44 587 154756</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- End Top Header -->        
+        </header>
+        <!-- End Header Area -->
+
+             <?php
+        require 'db.php';
+        require 'header.php';
+        ?>
+
+        <!-- Start Live Map Tracker -->
+        <div id="live-map-tracker">
+            <a href="index.php" class="link-btn">Back to Home</a>
+            <iframe src="https://www.bing.com/covid"></iframe>
         </div>
-        <!-- End Coming Soon Area -->
+        <!-- End Live Map Tracker -->
 
         <!-- Links of JS files -->
         <script src="assets/js/jquery.min.js"></script>
@@ -90,4 +97,7 @@
         <script src="assets/js/main.js"></script>
     </body>
 
+    <?php
+    require 'footer.php';
+    ?>
 </html>
