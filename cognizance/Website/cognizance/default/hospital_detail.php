@@ -164,7 +164,7 @@ table tr:hover{
     </head>
     <body>
 
-        <!-- Start Hospital Cards Area -->
+       <!-- !-- Start Hospital Cards Area -->
 <section class="hospital-area pt-100 pb-70">
     <div class="container">
         <div class="section-title text-center mb-5">
@@ -182,18 +182,27 @@ table tr:hover{
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100 shadow-sm p-3">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo htmlspecialchars($row['hospital_name']); ?></h5>
-                                <p class="card-text"><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
-                                <p class="card-text"><strong>Phone:</strong> <?php echo htmlspecialchars($row['phone']); ?></p>
-                                <p class="card-text"><strong>Email:</strong> <a href="mailto:<?php echo htmlspecialchars($row['email']); ?>"><?php echo htmlspecialchars($row['email']); ?></a></p>
-                                <p class="card-text"><strong>Details:</strong> <?php echo htmlspecialchars($row['details']); ?></p>
-                                <?php if(!empty($row['hospital_file'])) { ?>
-                                    <a href="uploads/<?php echo htmlspecialchars($row['hospital_file']); ?>" target="_blank" class="btn btn-primary mt-2">
-    View Hospital Detail File
-</a>
-                                    </a>
-                                <?php } ?>
-                            </div>
+
+    <?php if(!empty($row['hospital_image'])) { ?>
+        <div class="mb-3 text-center">
+            <img src="uploads/<?php echo htmlspecialchars($row['hospital_image']); ?>" 
+                 alt="<?php echo htmlspecialchars($row['hospital_name']); ?> Image" 
+                 class="img-fluid rounded" 
+                 style="max-height:200px;">
+        </div>
+    <?php } ?>
+
+    <h4 class=" "><?php echo htmlspecialchars($row['hospital_name']); ?></h4>
+    <p class="card-text"><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
+    <p class="card-text"><strong>Phone:</strong> <?php echo htmlspecialchars($row['phone']); ?></p>
+    <p class="card-text"><strong>Email:</strong> <a href="mailto:<?php echo htmlspecialchars($row['email']); ?>"><?php echo htmlspecialchars($row['email']); ?></a></p>
+    <p class="card-text"><strong>Details:</strong> <?php echo htmlspecialchars($row['details']); ?></p>
+    <?php if(!empty($row['hospital_file'])) { ?>
+        <a href="uploads/<?php echo htmlspecialchars($row['hospital_file']); ?>" target="_blank" class="btn btn-primary mt-2">
+            View Hospital Detail File
+        </a>
+    <?php } ?>
+</div>
                         </div>
                     </div>
                     <?php

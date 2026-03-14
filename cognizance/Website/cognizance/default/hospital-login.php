@@ -7,20 +7,17 @@ if(isset($_POST['login'])){
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
 
-    $query = mysqli_query($conn,"SELECT * FROM patients WHERE email='$email'");
+    $query = mysqli_query($conn,"SELECT * FROM hospitals WHERE email='$email'");
 
     if(mysqli_num_rows($query) == 1){
 
         $row = mysqli_fetch_assoc($query);
 
         if(password_verify($password, $row['password'])){
-
-            $_SESSION['patient'] = $row['id'];
-            $_SESSION['patient_name'] = $row['name'];
-
+            $_SESSION['hospital'] = $row['id'];
+            $_SESSION['hospital_name'] = $row['name'];
             header("Location: index.php");
             exit();
-
         } else {
             $error = "Wrong Password!";
         }
@@ -91,7 +88,7 @@ if(isset($_POST['login'])){
         <!-- End Search Overlay -->
 
 <div class="container mt-5" style="max-width:500px;">
-<h3 class="text-center">Patient Login</h3>
+<h3 class="text-center">Hospital Login</h3>
 
 <?php if(isset($error)){ ?>
 <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -112,6 +109,10 @@ if(isset($_POST['login'])){
 <button type="submit" name="login" class="btn btn-primary w-100">
 Login
 </button>
+<p class="text-center mt-3">
+    Don't have an account? 
+    <a href="hospital.php" class="text-primary fw-bold">Create Account</a>
+</p>
 </div>
 <br>
         <!-- Links of JS files -->

@@ -1,7 +1,3 @@
-<?php
-require "db.php";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +22,27 @@ require "db.php";
         <link rel="stylesheet" href="assets/css/responsive.css">
 
 <style>
+
+    .doctor-img-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px; /* adds white space around image */
+}
+
+.doctor-img-wrapper img {
+    max-width: 100%;
+    max-height: 200px; /* compact but clear */
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s;
+    display: inline-block; /* centers inside wrapper */
+}
+
+.doctor-card:hover .doctor-img-wrapper img {
+    transform: scale(1.05);
+}
 body{
     font-family: 'Poppins', sans-serif;
     background:#f4f6f9;
@@ -110,7 +127,8 @@ Doctor Dashboard
 </div>
 
 <?php
- require 'header.php'; 
+require "db.php";
+require 'header.php'; 
  ?>
 
 <div class="container-box">
@@ -134,27 +152,33 @@ if(isset($_POST['search'])) {
     $result = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($result) > 0) {
-        echo "<div class='container my-4'>"; // main page container
+        echo "<div class='container my-4'>";
         echo "<div class='row'>";
         while($row = mysqli_fetch_assoc($result)) {
             echo "<div class='col-lg-4 col-md-6 mb-4'>";
-            echo "<div class='doctor card p-3 h-100'>";
+            echo "<div class='doctor card p-3 h-100'>";            
+
+            // Doctor Info
+            $photo = !empty($row['photo']) ? $row['photo'] : 'default-doctor.jpg';
+echo '<div class="doctor-img-wrapper">';
+echo '<img src="uploads/doctors/'.$photo.'" alt="">';
+echo '</div>';
             echo "<h5>".$row['full_name']."</h5>";
             echo "<p><b>Specialization:</b> ".$row['degree']."</p>";
             echo "<p><b>Email:</b> ".$row['email']."</p>";
             echo "<p><b>Phone:</b> ".$row['phone']."</p>";
             echo "<p><b>Address:</b> ".$row['address']."</p>";
+
             echo "</div>";
             echo "</div>";
         }
         echo "</div>";
-        echo "</div>"; // end main container
+        echo "</div>";
     } else {
         echo "<div class='container my-4'><div class='doctor text-center'>No doctor found</div></div>";
     }
 }
 ?>
-
 <?php require "footer.php"; ?>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="gDGeWkkHUJdf3-sN41oxv";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();

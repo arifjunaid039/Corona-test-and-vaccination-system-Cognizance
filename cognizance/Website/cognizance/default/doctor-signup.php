@@ -88,7 +88,14 @@
                                 <option value="Neurologist">Neurologist</option>
                                 <option value="Pediatrician">Pediatrician</option>
                                 <option value="General Practitioner">General Practitioner</option>
-                            </select>
+                            </select>   
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control"  placeholder="Enter password" required>
                         </div>
                     </div>
 
@@ -98,6 +105,13 @@
                             <input type="file" name="cv" class="form-control" accept=".pdf,.doc,.docx" required>
                         </div>
                     </div>
+
+                    <div class="col-lg-6 col-md-12">
+    <div class="form-group">
+        <label>Doctor Profile Picture</label>
+        <input type="file" name="photo" class="form-control" accept="image/*" required>
+    </div>
+</div>
 
                     <div class="col-12">
                         <div class="form-group">

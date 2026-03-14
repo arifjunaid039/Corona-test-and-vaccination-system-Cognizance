@@ -25,6 +25,132 @@
 
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
     </head>
+
+        <style>
+
+
+.doctor-img-wrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px; /* adds white space around image */
+}
+
+.doctor-img-wrapper img {
+    max-width: 100%;
+    max-height: 200px; /* compact but clear */
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s;
+    display: inline-block; /* centers inside wrapper */
+}
+
+.doctor-card:hover .doctor-img-wrapper img {
+    transform: scale(1.05);
+}
+
+.doctor-card-body {
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+}   
+
+/* Degree Heading Style */
+.degree-heading{
+    width: 100%;
+    margin: 40px 0 20px;
+    text-align: center;
+}
+
+.degree-heading h3{
+    display: inline-block;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2f80ed;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.degree-heading h3::after{
+    content: "";
+    width: 60%;
+    height: 3px;
+    background: #2f80ed;
+    position: absolute;
+    left: 20%;
+    bottom: 0;
+    border-radius: 2px;
+}
+/* Doctor Card */
+.doctor-card{
+    border-radius:12px;
+    background:#fff;
+    overflow:hidden;
+    transition:all 0.3s ease;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.doctor-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.18);
+}
+
+.doctor-card:hover img{
+    transform:scale(1.08);
+}
+
+/* Card Body */
+.doctor-card-body{
+    padding:15px;
+    text-align:center;
+}
+
+.doctor-card-body h4{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.doctor-card-body p{
+    font-size:14px;
+    margin-bottom:6px;
+    color:#555;
+}
+
+/* Buttons */
+.doctor-btn{
+    margin-top:10px;
+}
+
+.doctor-btn a{
+    display:inline-block;
+    padding:6px 14px;
+    font-size:13px;
+    border-radius:5px;
+    margin:3px;
+    text-decoration:none;
+}
+
+.view-btn{
+    background:#2f80ed;
+    color:#fff;
+}
+
+.book-btn{
+    background:#27ae60;
+    color:#fff;
+}
+
+.view-btn:hover{
+    background:#1c63c9;
+}
+
+.book-btn:hover{
+    background:#1e874b;
+}
+
+</style>
     <body>
 
            
@@ -75,43 +201,70 @@
 <!-- Start Doctors Cards Area -->
 <section class="doctors-list-area pt-100 pb-70">
     <div class="container">
+
         <div class="section-title text-center mb-5">
             <span class="sub-title">Our Doctors</span>
             <h2>Doctors List</h2>
         </div>
 
         <div class="row">
-            <?php
-            require 'db.php';
 
+<?php
 
-            $approved_doctors = mysqli_query($conn, "SELECT * FROM doctor_details WHERE status='approved' ORDER BY created_at DESC");
+$degrees = mysqli_query($conn,"SELECT DISTINCT degree FROM doctor_details WHERE status='approved'");
 
-if(mysqli_num_rows($approved_doctors) > 0){
-    while($row = mysqli_fetch_assoc($approved_doctors)){
-        ?>
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title"><?= htmlspecialchars($row['full_name']); ?></h5>
-                    <p class="card-text"><strong>Degree:</strong> <?= htmlspecialchars($row['degree']); ?></p>
-                    <p class="card-text"><strong>Phone:</strong> <a href="tel:<?= htmlspecialchars($row['phone']); ?>"><?= htmlspecialchars($row['phone']); ?></a></p>
-                    <p class="card-text"><strong>Email:</strong> <a href="mailto:<?= htmlspecialchars($row['email']); ?>"><?= htmlspecialchars($row['email']); ?></a></p>
-                    <p class="card-text"><strong>Address / Hospital:</strong> <?= htmlspecialchars($row['address']); ?></p>
-                    <p class="card-text"><small class="text-muted">Registered On: <?= date('d M Y', strtotime($row['created_at'])); ?></small></p>
-                </div>
-            </div>
-        </div>
-        <?php
+while($deg = mysqli_fetch_assoc($degrees)){
+
+    $degree = $deg['degree'];
+
+    echo "<div class='degree-heading'><h3>$degree</h3></div>";
+
+    $doctors = mysqli_query($conn,"SELECT * FROM doctor_details 
+    WHERE degree='$degree' AND status='approved'");
+
+    while($row = mysqli_fetch_assoc($doctors)){
+
+        $photo = !empty($row['photo']) ? $row['photo'] : "default-doctor.jpg";
+?>
+
+<div class="col-lg-4 col-md-6 mb-4">
+<div class="doctor-card">
+
+<div class="doctor-img-wrapper">
+<img src="uploads/doctors/<?php echo $photo; ?>" alt="">
+</div>
+
+<div class="doctor-card-body">
+
+<h4><?php echo htmlspecialchars($row['full_name']); ?></h4>
+
+<p><strong>Specialization:</strong> <?php echo htmlspecialchars($row['degree']); ?></p>
+
+<p><strong>Phone:</strong> <?php echo htmlspecialchars($row['phone']); ?></p>
+
+<p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
+
+<p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
+<div class="doctor-btn">
+<a href="doctor-profile.php?id=<?php echo $row['id']; ?>" class="view-btn">View Profile</a>
+
+<a href="appointment.php?doctor_id=<?php echo $row['id']; ?>" class="book-btn">Book</a>
+</div>
+<p class="text-muted">
+Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
+</p>
+
+</div>
+</div>
+</div>
+
+<?php
     }
-} else {
-    echo '<div class="col-12 text-center"><p>No doctors added yet.</p></div>';
 }
 ?>
-        </div>
-    </div>
 </section>
 <!-- End Doctors Cards Area -->
+        <hr>
 
 
         <!-- Start Symptoms Area -->

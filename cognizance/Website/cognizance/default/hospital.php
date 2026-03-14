@@ -128,6 +128,16 @@ require 'header.php';
            required>
   </div>
 </div>
+<div class="col-lg-12 col-md-12">
+  <div class="form-group">
+    <label>Upload Hospital Picture Format (JPG / PNG)</label>
+    <input type="file"
+           name="hospital_image"
+           class="form-control"
+           accept=".pdf,.doc,.docx"
+           required>
+  </div>
+</div>
 
     <div class="col-lg-12 col-md-12 text-center">
       <button type="submit"

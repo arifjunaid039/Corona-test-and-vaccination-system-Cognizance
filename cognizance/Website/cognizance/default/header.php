@@ -134,44 +134,45 @@ if(session_status() == PHP_SESSION_NONE){
 
                     </ul>
 
-                    <div class="others-option d-flex align-items-center">
+<div class="others-option d-flex align-items-center">
 
-<?php if(!isset($_SESSION['patient'])) { ?>
+<?php
+// Check if any user is logged in
+if(!isset($_SESSION['patient']) && !isset($_SESSION['doctor']) && !isset($_SESSION['hospital'])) { 
+?>
 
-<!-- Sign Up -->
-<div class="option-item dropdown me-2">
-<button class="default-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="padding: 12px 12px;  /* smaller button */
-    font-size: 0.85rem;">
-<i></i> Sign-up
-</button>
-
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="patient.php">Patient Sign-up</a></li>
-<li><a class="dropdown-item" href="hospital.php">Hospital Sign-up</a></li>
-<li><a class="dropdown-item" href="doctor-signup.php">Doctor Sign-up</a></li>
-</ul>
-</div>
-
-<!-- Login -->
-
-<a href="login.php" class="default-btn" style="padding: 12px 12px;  /* smaller button */
-    font-size: 0.85rem;">
-    <i></i> PatientLogin
-</a>
-</div>
-
-<?php } else { ?>
-
-<a href="logout.php" class="default-btn" style="padding:6px 18px;font-size:14px;border-radius:5px;">
-Logout
-</a>
-
-<?php } ?>
-
-</div>
+    <!-- Sign-up Dropdown -->
+    <div class="option-item dropdown">
+        <button class="default-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="padding: 8px 12px; font-size: 0.85rem; border-radius:5px 0 0 5px;">
+            Sign-up
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="patient.php">Patient Sign-up</a></li>
+            <li><a class="dropdown-item" href="doctor-signup.php">Doctor Sign-up</a></li>
+            <li><a class="dropdown-item" href="hospital.php">Hospital Sign-up</a></li>
+        </ul>
     </div>
+
+    <!-- Login Dropdown -->
+    <div class="option-item dropdown">
+        <button class="default-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="padding: 8px 12px; font-size: 0.85rem; border-radius:0 5px 5px 0; margin-left:-1px;">
+            Login
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="login.php">Patient Login</a></li>
+            <li><a class="dropdown-item" href="doctor-login.php">Doctor Login</a></li>
+            <li><a class="dropdown-item" href="hospital-login.php">Hospital Login</a></li>
+        </ul>
+    </div>
+
+<?php 
+} else { 
+?>
+    <a href="logout.php" class="default-btn" style="padding:6px 18px;font-size:14px;border-radius:5px;">
+        Logout
+    </a>
+<?php } ?>
 </div>
-                </div>
             </nav>
         </div>
     </div>

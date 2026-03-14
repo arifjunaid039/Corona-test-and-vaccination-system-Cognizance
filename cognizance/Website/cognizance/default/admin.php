@@ -35,7 +35,7 @@ body {
 }
 
 .login-box {
-    background: #70cece;
+    background: #bee6ed;
     padding: 40px 30px;
     border-radius: 15px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.2);
@@ -138,8 +138,5 @@ require 'footer.php';
         <script src="assets/js/contact-form-script.js"></script>
         <script src="assets/js/ajaxchimp.min.js"></script>
         <script src="assets/js/main.js"></script>
-        <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="gDGeWkkHUJdf3-sN41oxv";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-</script>
 </body>
 </html>

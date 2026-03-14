@@ -7,20 +7,17 @@ if(isset($_POST['login'])){
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
 
-    $query = mysqli_query($conn,"SELECT * FROM patients WHERE email='$email'");
+    $query = mysqli_query($conn,"SELECT * FROM doctor_details WHERE email='$email'");
 
     if(mysqli_num_rows($query) == 1){
 
         $row = mysqli_fetch_assoc($query);
 
         if(password_verify($password, $row['password'])){
-
-            $_SESSION['patient'] = $row['id'];
-            $_SESSION['patient_name'] = $row['name'];
-
+            $_SESSION['doctor'] = $row['id'];
+            $_SESSION['doctor_name'] = $row['full_name'];
             header("Location: index.php");
             exit();
-
         } else {
             $error = "Wrong Password!";
         }
@@ -29,6 +26,7 @@ if(isset($_POST['login'])){
         $error = "Email not found!";
     }
 }
+?>
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -91,7 +89,7 @@ if(isset($_POST['login'])){
         <!-- End Search Overlay -->
 
 <div class="container mt-5" style="max-width:500px;">
-<h3 class="text-center">Patient Login</h3>
+<h3 class="text-center">Doctor Login</h3>
 
 <?php if(isset($error)){ ?>
 <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -112,6 +110,10 @@ if(isset($_POST['login'])){
 <button type="submit" name="login" class="btn btn-primary w-100">
 Login
 </button>
+<p class="text-center mt-3">
+    Don't have an account? 
+    <a href="doctor-signup.php" class="text-primary fw-bold">Create Account</a>
+</p>
 </div>
 <br>
         <!-- Links of JS files -->
