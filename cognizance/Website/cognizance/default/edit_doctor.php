@@ -73,7 +73,7 @@ if(isset($_POST['update'])){
         <label>Status</label>
         <select name="status" class="form-control">
             <option value="pending" <?= $doctor['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
-            <option value="approved" <?= $doctor['status'] == 'approved' ? 'selected' : '' ?>>Approved</option>
+            <option value="verified" <?= $doctor['status'] == 'verified' ? 'selected' : '' ?>>Approved</option>
             <option value="rejected" <?= $doctor['status'] == 'rejected' ? 'selected' : '' ?>>Rejected</option>
         </select>
     </div>

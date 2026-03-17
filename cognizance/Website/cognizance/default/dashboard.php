@@ -43,6 +43,60 @@
 .doctor-card:hover .doctor-img-wrapper img {
     transform: scale(1.05);
 }
+
+/* Doctor Card Buttons Styling */
+.doctor-btn {
+    margin-top: 12px;
+}
+
+/* Common button style */
+.doctor-btn a {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 14px;
+    border-radius: 6px;
+    margin: 5px 3px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+/* View Details button */
+.view-btn {
+    background: #2f80ed;
+    color: #fff;
+    border: none;
+}
+
+.view-btn:hover {
+    background: #1c63c9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.18);
+}
+
+/* Book Appointment button */
+.book-btn {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+}
+
+.book-btn:hover {
+    background: #1e874b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.18);
+}
+
+/* Responsive: full width on mobile */
+@media (max-width: 576px) {
+    .doctor-btn a {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
 body{
     font-family: 'Poppins', sans-serif;
     background:#f4f6f9;
@@ -123,7 +177,7 @@ button:hover{
 <body>
 
 <div class="dashboard-header">
-Doctor Dashboard
+Find Doctor
 </div>
 
 <?php
@@ -141,44 +195,60 @@ require 'header.php';
             <option value="Pediatrician">Pediatrician</option>
             <option value="General Practitioner">General Practitioner</option>
         </select>
-        <button name="search">Find Doctor</button>
+        <buttonon name="search">Find Doctor</buttonon>
     </form>
 </div>
 
 <?php
 if(isset($_POST['search'])) {
     $degree = mysqli_real_escape_string($conn, $_POST['degree']);
-    $sql = "SELECT * FROM doctor_details WHERE degree='$degree' AND status='approved'";
+    $sql = "SELECT *,
+           (SELECT hospital_name FROM hospitals WHERE id = doctor_details.hospital_id) AS hospital_name
+           FROM doctor_details 
+           WHERE degree='$degree' AND verified_status='verified'";
     $result = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($result) > 0) {
         echo "<div class='container my-4'>";
         echo "<div class='row'>";
         while($row = mysqli_fetch_assoc($result)) {
-            echo "<div class='col-lg-4 col-md-6 mb-4'>";
-            echo "<div class='doctor card p-3 h-100'>";            
 
-            // Doctor Info
             $photo = !empty($row['photo']) ? $row['photo'] : 'default-doctor.jpg';
-echo '<div class="doctor-img-wrapper">';
-echo '<img src="uploads/doctors/'.$photo.'" alt="">';
-echo '</div>';
-            echo "<h5>".$row['full_name']."</h5>";
-            echo "<p><b>Specialization:</b> ".$row['degree']."</p>";
-            echo "<p><b>Email:</b> ".$row['email']."</p>";
-            echo "<p><b>Phone:</b> ".$row['phone']."</p>";
-            echo "<p><b>Address:</b> ".$row['address']."</p>";
 
-            echo "</div>";
-            echo "</div>";
+            // ✅ Fixed col class
+            echo "<div class='col-lg-4 col-md-6 mb-4'>";
+            echo "<div class='doctor card p-3 h-100'>";
+
+            echo '<div class="doctor-img-wrapper">';
+            echo '<img src="uploads/doctors/'.$photo.'" alt="">';
+            echo '</div>';
+
+            echo "<h5>".htmlspecialchars($row['full_name'])."</h5>";
+            echo "<p><b>Specialization:</b> ".htmlspecialchars($row['degree'])."</p>";
+            echo "<p><b>PMC Number:</b> ".htmlspecialchars($row['pmc_number'])."</p>";
+            echo "<p><b>University:</b> ".htmlspecialchars($row['university_name'])."</p>";
+            echo "<p><b>Graduation Year:</b> ".htmlspecialchars($row['graduation_year'])."</p>";
+            echo "<p><b>Hospital:</b> ".htmlspecialchars($row['hospital_name'] ?? 'Not assigned')."</p>";
+            echo "<p><b>Email:</b> ".htmlspecialchars($row['email'])."</p>";
+            echo "<p><b>Phone:</b> ".htmlspecialchars($row['phone'])."</p>";
+            echo "<p><b>Address:</b> ".htmlspecialchars($row['address'])."</p>";
+
+            echo '<div class="doctor-btn">';
+            if(!empty($row['details'])){
+                echo '<a href="uploads/doctor_details/'.htmlspecialchars($row['details']).'" target="_blank" class="view-btn">View Details File</a>';
+            }
+            echo "</div>"; // doctor-btn
+            echo "</div>"; // doctor card
+            echo "</div>"; // col
         }
-        echo "</div>";
-        echo "</div>";
+        echo "</div>"; // row
+        echo "</div>"; // container
     } else {
         echo "<div class='container my-4'><div class='doctor text-center'>No doctor found</div></div>";
     }
 }
 ?>
+<br><hr>
 <?php require "footer.php"; ?>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="gDGeWkkHUJdf3-sN41oxv";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();

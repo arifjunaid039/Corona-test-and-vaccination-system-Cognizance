@@ -8,7 +8,7 @@ if(!isset($_SESSION['admin'])){
 }
 
 $total_hospitals = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM hospitals WHERE status='approved'"))['total'];
-$total_doctors   = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM doctor_details WHERE status='approved'"))['total'];
+$total_doctors   = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM doctor_details WHERE verified_status='verified'"))['total'];
 $total_patients  = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM patients"))['total'];
 $total_appointment = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM appointments"))['total'];
 $total_orders    = mysqli_fetch_assoc(mysqli_query($conn,"SELECT COUNT(*) as total FROM orders"))['total'];

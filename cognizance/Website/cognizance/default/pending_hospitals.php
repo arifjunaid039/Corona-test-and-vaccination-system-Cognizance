@@ -154,6 +154,7 @@ width:100%;
 <th>ID</th>
 <th>Name</th>
 <th>Email</th>
+<th>File</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -163,11 +164,20 @@ width:100%;
 <?php
 if ($pending_hospitals && mysqli_num_rows($pending_hospitals) > 0) {
     while ($row = mysqli_fetch_assoc($pending_hospitals)) {
-        ?>
+
+        // Get the file name from database
+$file = $row['hospital_file'] ?? '';        ?>
         <tr>
             <td><?= $row['id'] ?></td>
             <td><?= htmlspecialchars($row['hospital_name']) ?></td>
             <td><?= htmlspecialchars($row['email']) ?></td>
+                <td>
+    <?php if(!empty($file)): ?>
+        <a href="uploads/<?= htmlspecialchars($file) ?>" target="_blank" class="btn btn-info btn-sm px-3">View File</a>
+    <?php else: ?>
+        <span class="text-muted">N/A</span>
+    <?php endif; ?>
+</td>
             <td>
                 <a class="btn btn-success btn-sm px-3" href="approve.php?id=<?= $row['id'] ?>">Approve</a>
                 <a class="btn btn-danger btn-sm px-3" href="reject.php?id=<?= $row['id'] ?>">Reject</a>
@@ -176,7 +186,7 @@ if ($pending_hospitals && mysqli_num_rows($pending_hospitals) > 0) {
         <?php
     }
 } else {
-    echo "<tr><td colspan='4' class='text-center'>No pending hospitals found</td></tr>";
+    echo "<tr><td colspan='5' class='text-center'>No pending hospitals found</td></tr>";
 }
 ?>
 

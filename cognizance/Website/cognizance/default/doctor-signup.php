@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Registration - Cognizance</title>
+    <title>Doctor Registration - Cognizance</title>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -93,11 +93,50 @@
                     </div>
 
                     <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control"  placeholder="Enter password" required>
-                        </div>
-                    </div>
+    <div class="form-group">
+        <label>University Name</label>
+        <input type="text" name="university_name" class="form-control" placeholder="Enter University Name" required>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-12">
+    <div class="form-group">
+        <label>Graduation Year</label>
+        <input type="number" name="graduation_year" class="form-control" placeholder="Enter Graduation Year" required>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-12">
+    <div class="form-group">
+        <label>PMC Registration Number</label>
+        <input type="text" name="pmc_number" class="form-control" placeholder="Enter PMC Number" required>
+    </div>
+</div>
+
+                    <div class="col-lg-6 col-md-12">
+    <div class="form-group">
+        <label>Select Hospital</label>
+        <select name="hospital_id" class="form-control" required>
+
+            <option value="">-- Select Hospital --</option>
+
+            <?php
+            $sql = "SELECT id, hospital_name FROM hospitals WHERE status='approved'";
+            $result = mysqli_query($conn,$sql);
+
+            while($row = mysqli_fetch_assoc($result)){
+            ?>
+
+            <option value="<?php echo $row['id']; ?>">
+                <?php echo $row['hospital_name']; ?>
+            </option>
+
+            <?php } ?>
+
+        </select>
+    </div>
+</div>
+
 
                     <div class="col-lg-6 col-md-12">
                         <div class="form-group">
@@ -108,9 +147,15 @@
 
                     <div class="col-lg-6 col-md-12">
     <div class="form-group">
-        <label>Doctor Profile Picture</label>
-        <input type="file" name="photo" class="form-control" accept="image/*" required>
+        <label>Doctor Profile Picture (Jpg/png)</label>
+        <input type="file" name="photo" class="form-control" required>
     </div>
+</div>
+
+<div class="col-lg-6 col-md-12">
+    <div class="form-group">
+        <label>Doctor Details for patient (PDF/DOC/DOCX)</label>
+<input type="file" name="details_photo" class="form-control" required>    </div>
 </div>
 
                     <div class="col-12">

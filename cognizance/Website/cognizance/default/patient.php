@@ -64,6 +64,13 @@
 <form id="patient-registration-form" method="post" action="patient1.php">
 <div class="row g-3">
 
+<div class="col-lg-12 col-md-12">
+    <div class="form-group">
+        <label>Profile Picture</label>
+        <input type="file" name="profile_pic" class="form-control" accept="image/*">
+    </div>
+</div>
+
 <div class="col-lg-6 col-md-12">
 <div class="form-group">
 <label>Full Name</label>

@@ -28,7 +28,6 @@
 
         <style>
 
-
 .doctor-img-wrapper {
     width: 100%;
     overflow: hidden;
@@ -211,7 +210,7 @@
 
 <?php
 
-$degrees = mysqli_query($conn,"SELECT DISTINCT degree FROM doctor_details WHERE status='approved'");
+    $degrees = mysqli_query($conn,"SELECT DISTINCT degree FROM doctor_details WHERE verified_status='verified'");
 
 while($deg = mysqli_fetch_assoc($degrees)){
 
@@ -219,8 +218,11 @@ while($deg = mysqli_fetch_assoc($degrees)){
 
     echo "<div class='degree-heading'><h3>$degree</h3></div>";
 
-    $doctors = mysqli_query($conn,"SELECT * FROM doctor_details 
-    WHERE degree='$degree' AND status='approved'");
+
+$doctors = mysqli_query($conn,"SELECT *,
+    (SELECT hospital_name FROM hospitals WHERE id = doctor_details.hospital_id) AS hospital_name
+    FROM doctor_details 
+    WHERE degree='$degree' AND verified_status='verified'");
 
     while($row = mysqli_fetch_assoc($doctors)){
 
@@ -228,34 +230,38 @@ while($deg = mysqli_fetch_assoc($degrees)){
 ?>
 
 <div class="col-lg-4 col-md-6 mb-4">
-<div class="doctor-card">
+    <div class="doctor-card">
 
-<div class="doctor-img-wrapper">
-<img src="uploads/doctors/<?php echo $photo; ?>" alt="">
-</div>
+        <div class="doctor-img-wrapper">
+            <img src="uploads/doctors/<?php echo $photo; ?>" alt="">
+        </div>
 
-<div class="doctor-card-body">
+        <div class="doctor-card-body">
 
-<h4><?php echo htmlspecialchars($row['full_name']); ?></h4>
+            <h4><?php echo htmlspecialchars($row['full_name']); ?></h4>
 
-<p><strong>Specialization:</strong> <?php echo htmlspecialchars($row['degree']); ?></p>
+            <p><strong>Specialization:</strong> <?php echo htmlspecialchars($row['degree']); ?></p>
+<p><strong>University:</strong> <?php echo htmlspecialchars($row['university_name'] ?? ''); ?></p><p><strong>Graduation Year:</strong> <?php echo htmlspecialchars($row['graduation_year'] ?? 'Not assigned'); ?></p>
+<p><strong>PMC Number:</strong> <?php echo htmlspecialchars($row['pmc_number'] ?? 'Not assigned'); ?></p>
+            <p><strong>Hospital:</strong> <?php echo htmlspecialchars($row['hospital_name'] ?? 'Not assigned'); ?></p>
+            <p><strong>Phone:</strong> <?php echo htmlspecialchars($row['phone']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
+            <p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
 
-<p><strong>Phone:</strong> <?php echo htmlspecialchars($row['phone']); ?></p>
+            <div class="doctor-btn">
+<?php if(!empty($row['details'])): ?>
+    <a href="uploads/doctor_details/<?php echo htmlspecialchars($row['details']); ?>" target="_blank" class="view-btn">
+        View Details File
+    </a>
+<?php endif; ?>
+            </div>
 
-<p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
+            <p class="text-muted">
+                Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
+            </p>
 
-<p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
-<div class="doctor-btn">
-<a href="doctor-profile.php?id=<?php echo $row['id']; ?>" class="view-btn">View Profile</a>
-
-<a href="appointment.php?doctor_id=<?php echo $row['id']; ?>" class="book-btn">Book</a>
-</div>
-<p class="text-muted">
-Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
-</p>
-
-</div>
-</div>
+        </div>
+    </div>
 </div>
 
 <?php
@@ -265,6 +271,7 @@ Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
 </section>
 <!-- End Doctors Cards Area -->
         <hr>
+        
 
 
         <!-- Start Symptoms Area -->

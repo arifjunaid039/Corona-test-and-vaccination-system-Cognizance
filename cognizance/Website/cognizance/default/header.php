@@ -61,6 +61,77 @@ if(session_status() == PHP_SESSION_NONE){
 .option-item.dropdown .dropdown-menu {
     min-width: 140px; /* smaller dropdown width */
 }
+
+.manage-profile-container {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    padding: 10px 0; /* upar neeche thoda space */
+    background: #f4f6f9;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.manage-profile-container .default-btn {
+    padding: 6px 18px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.profile-welcome-box{
+    text-align:center;
+    background:#f4f6f9;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.profile-welcome-box .welcome-text{
+    font-size:18px;
+    font-weight:600;
+    color:#333;
+    margin-bottom:8px;
+}
+
+.profile-welcome-box .default-btn{
+    padding:6px 20px;
+    font-size:14px;
+}
+
+.profile-welcome-box{
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Extra Big Profile Icon Button */
+.option-item.dropdown > a.default-btn {
+    width: 54px;            /* bigger width */
+    height: 54px;           /* bigger height */
+    border-radius: 50%;     /* keep it circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #007bff;
+    color: #fff;
+    font-size: 1.8rem;      /* bigger icon size */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* soft shadow for pop */
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.option-item.dropdown > a.default-btn:hover {
+    background: #0056b3;
+    transform: scale(1.15);  /* slightly larger on hover */
+}
+
+/* Dropdown alignment */
+.option-item.dropdown .dropdown-menu-end {
+    right: 0;
+}
+
+/* Dropdown item hover */
+.option-item.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
 </style>
 <!-- Start Header Area -->
         <header class="header-area">
@@ -87,7 +158,7 @@ if(session_status() == PHP_SESSION_NONE){
                         </div>
                     </div>
                 </div>
-            </div>
+                 </div>
             <!-- End Top Header -->        
         </header>
         <!-- End Header Area -->
@@ -129,6 +200,7 @@ if(session_status() == PHP_SESSION_NONE){
                         <?php
                         if(isset($_SESSION['patient'])) {
                             echo '<li class="nav-item"><a href="appointment.php" class="nav-link">Book Appointment</a></li>';
+                            
                         }
                         ?>
 
@@ -168,9 +240,36 @@ if(!isset($_SESSION['patient']) && !isset($_SESSION['doctor']) && !isset($_SESSI
 <?php 
 } else { 
 ?>
-    <a href="logout.php" class="default-btn" style="padding:6px 18px;font-size:14px;border-radius:5px;">
-        Logout
-    </a>
+    <div class="others-option d-flex align-items-center text-center">
+
+<?php if(isset($_SESSION['patient']) || isset($_SESSION['doctor']) || isset($_SESSION['hospital'])): ?>
+    <!-- Profile Icon -->
+    <div class="option-item dropdown">
+        <a class="default-btn dropdown-toggle" href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+           style="padding:px 10px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <i class='bx bx-user' style="font-size:1.2rem;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <?php if(isset($_SESSION['patient'])): ?>
+                <li><a class="dropdown-item" href="profile.php">Manage Profile</a></li>
+            <?php elseif(isset($_SESSION['doctor'])): ?>
+                <li><a class="dropdown-item" href="doctor-manage-profile.php">Manage Profile</a></li>
+            <?php elseif(isset($_SESSION['hospital'])): ?>
+                <li><a class="dropdown-item" href="hospital-manage-profile.php">Manage Profile</a></li>
+            <?php endif; ?>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+<?php else: ?>
+    <!-- Sign-up / Login buttons -->
+    <div class="option-item">
+        <a href="patient.php" class="default-btn">Sign Up</a>
+        <a href="login.php" class="default-btn">Login</a>
+    </div>
+<?php endif; ?>
+
+</div>
 <?php } ?>
 </div>
             </nav>

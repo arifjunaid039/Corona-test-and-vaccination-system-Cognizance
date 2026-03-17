@@ -4,7 +4,8 @@ require 'db.php';
 
 // Sirf admin hi access kar sake
 if(!isset($_SESSION['admin'])){
-    header("Location: admin.html");
+    header("Location: admin.php
+    ");
     exit;
 }
 

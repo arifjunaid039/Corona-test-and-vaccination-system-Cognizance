@@ -485,15 +485,16 @@ require 'header.php';
 
         <?php
 
-$degrees = mysqli_query($conn,"SELECT DISTINCT degree FROM doctor_details WHERE status='approved'");
-
+$degrees = mysqli_query($conn,"SELECT DISTINCT degree FROM doctor_details WHERE verified_status='verified'");
 while($deg = mysqli_fetch_assoc($degrees)){
 
     $degree = $deg['degree'];
 
-    $doctors = mysqli_query($conn,"SELECT * FROM doctor_details 
-    WHERE degree='$degree' AND status='approved' 
+    $doctors = mysqli_query($conn,"SELECT *, (SELECT hospital_name FROM hospitals WHERE id = doctor_details.hospital_id) AS hospital_name
+    FROM doctor_details
+    WHERE degree='$degree' AND verified_status='verified'
     LIMIT 2");
+
 
     while($row = mysqli_fetch_assoc($doctors)){
 
@@ -504,8 +505,7 @@ while($deg = mysqli_fetch_assoc($degrees)){
 <div class="doctor-card">
 
 <div class="doctor-img-wrapper">
-<img src="uploads/doctors/<?php echo $photo; ?>" alt="">
-</div>
+<img src="uploads/doctors/<?php echo htmlspecialchars($photo); ?>" alt=""> </div>
 
 <div class="doctor-card-body">
 
@@ -517,11 +517,15 @@ while($deg = mysqli_fetch_assoc($degrees)){
 
 <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
 
-<p><strong>Address:</strong> <?php echo htmlspecialchars($row['address']); ?></p>
+<p><strong>Hospital:</strong> 
+<?php echo htmlspecialchars($row['hospital_name'] ?? 'Not assigned'); ?>
+</p>
 <div class="doctor-btn">
-<a href="doctor-profile.php?id=<?php echo $row['id']; ?>" class="view-btn">View Profile</a>
-
-<a href="appointment.php?doctor_id=<?php echo $row['id']; ?>" class="book-btn">Book</a>
+<?php if(!empty($row['details'])): ?>
+    <a href="uploads/doctor_details/<?php echo htmlspecialchars($row['details']); ?>" target="_blank" class="view-btn">
+        View Details File
+    </a>
+<?php endif; ?>
 </div>
 <p class="text-muted">
 Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
@@ -584,7 +588,7 @@ Registered: <?php echo date('d M Y', strtotime($row['created_at'])); ?>
                     <?php
                 }
             } else {
-                echo '<div class="col-12 text-center"><p>No hospitals approved yet.</p></div>';
+                echo '<div class="col-12 text-center"><p>No hospitals verified yet.</p></div>';
             }
             ?>
         </div>

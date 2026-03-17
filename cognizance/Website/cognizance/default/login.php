@@ -2,29 +2,30 @@
 session_start();
 require 'db.php';
 
-if(isset($_POST['login'])){
+$error = '';
 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+if(isset($_POST['login'])){
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    $query = mysqli_query($conn,"SELECT * FROM patients WHERE email='$email'");
+    // Prepared statement for security
+    $stmt = $conn->prepare("SELECT id, full_name, password FROM patients WHERE email=? LIMIT 1");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if(mysqli_num_rows($query) == 1){
-
-        $row = mysqli_fetch_assoc($query);
+    if($result->num_rows === 1){
+        $row = $result->fetch_assoc();
 
         if(password_verify($password, $row['password'])){
-
+            // Login successful
             $_SESSION['patient'] = $row['id'];
-            $_SESSION['patient_name'] = $row['name'];
-
+            $_SESSION['patient_name'] = $row['full_name'];
             header("Location: index.php");
             exit();
-
         } else {
-            $error = "Wrong Password!";
+            $error = "Wrong password!";
         }
-
     } else {
         $error = "Email not found!";
     }
@@ -93,8 +94,10 @@ if(isset($_POST['login'])){
 <div class="container mt-5" style="max-width:500px;">
 <h3 class="text-center">Patient Login</h3>
 
-<?php if(isset($error)){ ?>
-<div class="alert alert-danger"><?php echo $error; ?></div>
+<?php if(!empty($error)){ ?>
+<div class="alert alert-danger text-center">
+    <?php echo htmlspecialchars($error); ?>
+</div>
 <?php } ?>
 
 <form method="POST">
@@ -112,6 +115,10 @@ if(isset($_POST['login'])){
 <button type="submit" name="login" class="btn btn-primary w-100">
 Login
 </button>
+<p class="text-center mt-3">
+    Don't have an account? 
+    <a href="patient.php" class="text-primary fw-bold">Create Account</a>
+</p>
 </div>
 <br>
         <!-- Links of JS files -->
